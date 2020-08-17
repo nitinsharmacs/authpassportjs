@@ -31,7 +31,7 @@ exports.fbLogin = (req, res) => {
 		expiresIn:'5h'
 	});
 	res.cookie('token',token, {maxAge:5*3600*1000});
-	return res.redirect('http://localhost:3000/home');
+	return res.redirect(process.env.REDIRECT);
 };
 exports.googleLogin = (req, res) => {
 	if(!req.user)
@@ -42,8 +42,8 @@ exports.googleLogin = (req, res) => {
 	}, process.env.JWT_KEY, {
 		expiresIn:'5h'
 	});
-	res.cookie('token',token, {maxAge:5*3600*1000, secure:true});
-	return res.redirect('http://localhost:3000/home');
+	res.cookie('token',token, {maxAge:5*3600*1000});
+	return res.redirect(process.env.REDIRECT);
 };
 exports.twitterLogin = (req, res) => {
 	if(!req.user)
@@ -55,5 +55,5 @@ exports.twitterLogin = (req, res) => {
 		expiresIn:'5h'
 	});
 	res.cookie('token',token, {maxAge:5*3600*1000});
-	return res.redirect('http://localhost:3000/home');
+	return res.redirect(process.env.REDIRECT);
 };
