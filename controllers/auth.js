@@ -42,7 +42,7 @@ exports.googleLogin = (req, res) => {
 	}, process.env.JWT_KEY, {
 		expiresIn:'5h'
 	});
-
+	console.log(req)
 	return res.status(200).cookie('token', token, {sameSite:false, maxAge:5*3600*1000}).redirect(process.env.REDIRECT);
 	
 };
