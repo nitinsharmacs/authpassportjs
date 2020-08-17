@@ -5,8 +5,8 @@ const MongoClient = mongodb.MongoClient;
 
 exports.db = null;
 
-const DB_URL = process.env.DB_URL || 'mongodb://127.0.0.1:27017';
-const DB_NAME = process.env.DB_NAME || 'feeberchat';
+const DB_URL = process.env.DB_URL 
+const DB_NAME = process.env.DB_NAME 
 
 exports.dbConnection = (cb) => {
 	MongoClient.connect(DB_URL, {useNewUrlParser:true}).then(client=>{
