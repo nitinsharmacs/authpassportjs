@@ -30,7 +30,7 @@ exports.fbLogin = (req, res) => {
 	}, process.env.JWT_KEY , {
 		expiresIn:'5h'
 	});
-	res.cookie('token',token, {maxAge:5*3600*1000});
+	res.cookie('token',token, {maxAge:5*3600*1000,});
 	return res.redirect(process.env.REDIRECT);
 };
 exports.googleLogin = (req, res) => {
@@ -43,7 +43,7 @@ exports.googleLogin = (req, res) => {
 		expiresIn:'5h'
 	});
 
-	return res.status(200).cookie('token', token, {maxAge:5*3600*1000, domain:'https://competent-saha-d69324.netlify.app'}).redirect(process.env.REDIRECT);
+	return res.status(200).cookie('token', token, {sameSite:false, maxAge:5*3600*1000}).redirect(process.env.REDIRECT);
 	
 };
 exports.twitterLogin = (req, res) => {
