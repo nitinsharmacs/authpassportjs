@@ -43,7 +43,7 @@ exports.googleLogin = (req, res) => {
 		expiresIn:'5h'
 	});
 
-	return res.status(200).cookie('token', token, {maxAge:5*3600*1000}).redirect(process.env.REDIRECT);
+	return res.status(200).cookie('token', token, {maxAge:5*3600*1000, httpOnly:false}).redirect(process.env.REDIRECT);
 	
 };
 exports.twitterLogin = (req, res) => {
