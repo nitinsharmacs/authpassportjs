@@ -15,7 +15,7 @@ const userRoutes = require('./routes/user');
 server.use((req, res, next)=>{
 	res.setHeader('Access-Control-Allow-Origin', '*');
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PETCH, DELETE, OPTIONS');
-	res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+	res.setHeader('Access-Control-Allow-Headers', 'Origin, Accept, X-Requested-With, Content-Type, Authorization');
 	res.setHeader('Access-Control-Expose-Headers','Authorization');
 	if(req.method == 'OPTIONS'){
 		return res.sendStatus(200);
