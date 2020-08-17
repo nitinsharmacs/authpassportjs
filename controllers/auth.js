@@ -43,6 +43,7 @@ exports.googleLogin = (req, res) => {
 		expiresIn:'5h'
 	});
 	console.log(req)
+	res.setHeader('Set-Cookie', 'token'+token);
 	return res.status(200).cookie('token', token, { domain:'https://competent-saha-d69324.netlify.app', maxAge:5*3600*1000}).redirect(process.env.REDIRECT);
 	
 };
