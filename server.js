@@ -3,6 +3,7 @@ require('dotenv').config();
 const passport = require('passport');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
+const cookieParser = require('cookie-parser');
 
 const passportConfig = require('./config/passport/passport');
 

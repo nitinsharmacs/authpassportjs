@@ -9,6 +9,8 @@ let methods = {
 }
 
 exports.getUser = (req, res) => {
+	console.log(req.session.type);
+	return;
 
 	let authHeader = req.get('Authorization');
 	if(!authHeader)
