@@ -42,7 +42,7 @@ exports.googleLogin = (req, res) => {
 	}, process.env.JWT_KEY, {
 		expiresIn:'5h'
 	});
-	res.cookie('token',token, {maxAge:5*3600*1000});
+	res.cookie('token',token, {maxAge:5*3600*1000, secure:true});
 	return res.redirect('http://localhost:3000/home');
 };
 exports.twitterLogin = (req, res) => {
