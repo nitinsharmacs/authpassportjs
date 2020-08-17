@@ -2,6 +2,7 @@ const server = require('express')();
 require('dotenv').config();
 const passport = require('passport');
 const bodyParser = require('body-parser');
+const cookieSession = require('cookie-session');
 
 const passportConfig = require('./config/passport/passport');
 
@@ -24,6 +25,11 @@ server.use((req, res, next)=>{
 	next();
 });
 server.use(bodyParser.json());
+
+server.use(cookieSession({
+	name:'session',
+	keys:[process.env.JWT_KEY]
+}));
 
 server.use(passport.initialize());
 
