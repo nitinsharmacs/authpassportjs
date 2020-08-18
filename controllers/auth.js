@@ -1,61 +1,35 @@
 const jwt = require('jsonwebtoken');
+const signature = require('cookie-signature');
 
 exports.localLogin = (req, res) => {
+
 	if(!req.user)
 		return res.status(req.info.status || 500).json(req.info);
 	let token = jwt.sign({
-		type:'local',
-		username:req.user.username,
-		id:req.user._id
+		id:req.user.id,
+		usernmae:req.user.username,
+		type:'local'
 	}, process.env.JWT_KEY, {
 		expiresIn:'5h'
 	});
-	return res.status(200).json({message:"Login Successful", status:200, token:token});
+	return res.status(200).json({message:"Login Successful", token:token, status:200});
 };
 exports.localRegister = (req, res) => {
 	if(!req.user)
 		return res.status(req.info.status || 500).json(req.info);
 	return res.status(201).json({message:"User Registered", status:201});
 };
-exports.fbLogin = (req, res) => {
-	console.log(req.user)
-	if(req.err){
-		console.log(req.err);
-	}
-	if(!req.user)
-		return res.status(req.info.status || 500).json(req.info);
-	let token = jwt.sign({
-		type:'facebook',
-		id:req.user.id
-	}, process.env.JWT_KEY , {
-		expiresIn:'5h'
-	});
-	res.cookie('token',token, {maxAge:5*3600*1000,});
-	return res.redirect(process.env.REDIRECT);
+exports.fbLoginFailed = (req, res) => {
+	return res.status(401).json({message:'Facebook Login Failed', status:401});
 };
-exports.googleLogin = (req, res) => {
-	if(!req.user)
-		return status(req.info.status || 500).json(req.info);
-	let token = jwt.sign({
-		type:'google',
-		id:req.user.id
-	}, process.env.JWT_KEY, {
-		expiresIn:'5h'
-	});
-	req.session.type = 'google';
-	return res.redirect(process.env.REDIRECT);
-	//return res.status(200).cookie('token', token, { maxAge:5*3600*1000, secure:true}).redirect(process.env.REDIRECT);
-	
+exports.googleLoginFailed = (req, res) => {
+	return res.status(401).json({message:'Google Login Failed', status:401});
 };
-exports.twitterLogin = (req, res) => {
-	if(!req.user)
-		return res.status(req.info.status || 500).json(req.info);
-	let token = jwt.sign({
-		type:'twitter',
-		id:req.user.id
-	}, process.env.JWT_KEY, {
-		expiresIn:'5h'
-	});
-	res.cookie('token',token, {maxAge:5*3600*1000});
-	return res.redirect(process.env.REDIRECT);
+exports.twitterLoginFailed = (req, res) => {
+	return res.status(401).json({message:'Twitter Login Failed', status:401});
+};
+
+exports.logout = (req, res) => {
+	req.logout();
+	res.redirect(process.env.REDIRECT);
 };

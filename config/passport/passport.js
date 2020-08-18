@@ -7,14 +7,36 @@ const TwitterStrategy = require('passport-twitter-oauth2').Strategy;
 const User = require('../../modals/user');
 const bcrypt = require('bcryptjs');
 
+
+let methods = {
+	local: User.findUserById,
+	facebook:User.findUserFb,
+	google:User.findUserGoogle,
+	twitter:User.findUserTwitter
+};
+
+passport.serializeUser((user, done) => {
+	console.log('SERSISALI');
+	console.log(user);
+  done(null, {id:user.id, type:user.type});
+});
+
+// deserialize the cookieUserId to user in the database
+passport.deserializeUser((user, done) => {
+	console.log('DESERIALIZE');
+	console.log(user);
+	methods[user.type](user.id).then(user=>{
+		return done(null, user);
+	}).catch(err=>done(err));
+});
+
+
 // passport setup for local login
 passport.use('local-login', new LocalStrategy({
 	usernameField:'username',
 	passwordField:'password'
 }, (username, password, done)=>{
 	let userdata;
-	console.log(username)
-	console.log(password)
 	User.findUser(username).then(user=>{
 		console.log(user)
 		if(!user)
@@ -25,7 +47,7 @@ passport.use('local-login', new LocalStrategy({
 		console.log(passwordMatch)
 		if(!passwordMatch)
 			return done(null, false, {message:"Invalid Password", status:401});
-		return done(null, userdata);
+		return done(null, {...userdata, type:'local', id:userdata._id.toString()});
 	}).catch(err=>done(err));
 }));
 
@@ -101,7 +123,7 @@ passport.use('fb-login', new FacebookStrategy({
 		if(!result)
 			return done(null, false, {message:"Facebook Login failed", status:500});
 		
-		return done(null, {name:profile.displayName, id:profile.id});
+		return done(null, {name:profile.displayName, id:profile.id, type:'facebook'});
 	}).catch(err=>done(err));
 }));
 
@@ -127,7 +149,7 @@ passport.use('google-login', new GoogleStrategy({
 	}).then(result=>{
 		if(!result)
 			return done(null, false, {message:"Google Login failed", status:500});
-		return done(null, {id:profile.id, name:profile.displayName});
+		return done(null, {id:profile.id, name:profile.displayName, type:'google'});
 	}).catch(err=>done(err));
 }));
 
@@ -151,7 +173,7 @@ passport.use('twitter-login', new TwitterStrategy({
 	}).then(result=>{
 		if(!result)
 			return done(null, false, {message:"Twitter Login failed", status:500});
-		return done(null, {id:profile.id, name:profile.displayName});
+		return done(null, {id:profile.id, name:profile.displayName, type:'twitter'});
 	}).catch(err=>done(err));
 }));
 

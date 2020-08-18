@@ -4,6 +4,7 @@ const passport = require('passport');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 const cookieParser = require('cookie-parser');
+const session = require('express-session');
 
 const passportConfig = require('./config/passport/passport');
 
@@ -15,10 +16,10 @@ const userRoutes = require('./routes/user');
 
 //CORS
 server.use((req, res, next)=>{
-	res.setHeader('Access-Control-Allow-Origin', '*');
+	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PETCH, DELETE, OPTIONS');
 	res.setHeader('Access-Control-Allow-Credentials', true);
-	res.setHeader('Access-Control-Allow-Headers', 'Origin, Accept, X-Requested-With, Content-Type, Authorization');
+	res.setHeader('Access-Control-Allow-Headers', 'Origin, Accept, X-Requested-With, Content-Type, Authorization, Access-Control-Allow-Credentials, Access');
 	res.setHeader('Access-Control-Expose-Headers','Authorization');
 	if(req.method == 'OPTIONS'){
 		return res.sendStatus(200);
@@ -29,11 +30,13 @@ server.use(bodyParser.json());
 
 server.use(cookieSession({
 	name:'session',
-	keys:[process.env.JWT_KEY]
+	keys:[process.env.JWT_KEY],
+	maxAge:5*3600*100
 }));
 
+server.use(cookieParser());
 server.use(passport.initialize());
-
+server.use(passport.session());
 server.use('/auth', authRoutes);
 server.use('/user', userRoutes);
 
