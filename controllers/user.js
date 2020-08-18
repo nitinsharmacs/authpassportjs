@@ -10,6 +10,7 @@ exports.getUser = async (req, res) => {
 	if(req.user){
 		return res.status(200).json({message:'User found', data:{name:req.user.name,username:req.user.username}, status:200});
 	} else if(token) {
+
 		try{
 			let decodedToken = jwt.verify(token, process.env.JWT_KEY);
 			let user = await User.findUserById(decodedToken.id);
