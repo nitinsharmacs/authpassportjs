@@ -15,6 +15,7 @@ exports.getUser = async (req, res) => {
 			let user = await User.findUserById(decodedToken.id);
 			return res.status(200).json({message:'User found', data:{name:user.name,username:user.username}, status:200});
 		} catch (err) {
+			console.log(err);
 			return res.status(500).json({message:'Something went wrong', status:500});
 		}
 		
