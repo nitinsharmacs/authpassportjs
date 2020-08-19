@@ -16,7 +16,7 @@ const userRoutes = require('./routes/user');
 
 //CORS
 server.use((req, res, next)=>{
-	res.setHeader('Access-Control-Allow-Origin', 'https://authpassportjs.herokuapp.com');
+	res.setHeader('Access-Control-Allow-Origin', 'https://competent-saha-d69324.netlify.app');
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PETCH, DELETE, OPTIONS');
 	res.setHeader('Access-Control-Allow-Credentials', true);
 	res.setHeader('Access-Control-Allow-Headers', 'Origin, Accept, X-Requested-With, Content-Type, Authorization, Access-Control-Allow-Credentials, Access');
