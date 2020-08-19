@@ -21,7 +21,7 @@ passport.serializeUser((user, done) => {
   done(null, {id:user.id, type:user.type});
 });
 
-// deserialize the cookieUserId to user in the database
+
 passport.deserializeUser((user, done) => {
 	console.log('DESERIALIZE');
 	console.log(user);
