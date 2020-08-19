@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 exports.getUser = async (req, res) => {
 
 	let token = req.get('Authorization').split(' ')[1];
-	console.log(token)
+	console.log(typeof token)
 
 	if(req.user){
 		return res.status(200).json({message:'User found', data:{name:req.user.name,username:req.user.username}, status:200});
