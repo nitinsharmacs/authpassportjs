@@ -105,7 +105,7 @@ passport.use('local-register', new LocalStrategy({
 // passport facebook auth
 passport.use('fb-login', new FacebookStrategy({
 	...credentials.FB,
-	callbackURL:'/auth/facebook/redirect'
+	callbackURL:'https://authpassportjs.herokuapp.com/auth/facebook/redirect'
 }, (accessToken, refreshToken, profile, done) => {
 	User.findUserFb(profile.id).then(user=>{
 		if(!user){
