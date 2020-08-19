@@ -9,7 +9,9 @@ exports.getUser = async (req, res) => {
 
 	if(req.user){
 		return res.status(200).json({message:'User found', data:{name:req.user.name,username:req.user.username}, status:200});
-	} else if(token) {
+	} 
+
+	if(token) {
 
 		try{
 			let decodedToken = jwt.verify(token, process.env.JWT_KEY);
@@ -19,11 +21,11 @@ exports.getUser = async (req, res) => {
 			console.log(err);
 			return res.status(500).json({message:'Something went wrong', status:500});
 		}
-		
-		
-	} else {
-		return res.status(401).json({message:'UnAuthorized Access', status:401});
 	}
+		
+	
+	return res.status(401).json({message:'UnAuthorized Access', status:401});
+	
 
 	
 };
