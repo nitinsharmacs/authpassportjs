@@ -157,7 +157,8 @@ passport.use('google-login', new GoogleStrategy({
 // passport twitter auth
 passport.use('twitter-login', new TwitterStrategy({
 	...credentials.TWITTER,
-	callbackURL:'/auth/twitter/redirect'
+	callbackURL:'/auth/twitter/redirect',
+	proxy:true
 }, (token, tokenSecret, profile, done)=>{
 	User.findUserTwitter(profile.id).then(user=>{
 		if(!user){
