@@ -177,6 +177,4 @@ passport.use('twitter-login', new TwitterStrategy({
 			return done(null, false, {message:"Twitter Login failed", status:500});
 		return done(null, {id:profile.id, name:profile.displayName, type:'twitter'});
 	}).catch(err=>done(err));
-}));
-
-// NOTE : Not using twitter Authentication as twitter supports only OAuth 1 that requires session support 
+})); 
